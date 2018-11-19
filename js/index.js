@@ -51,6 +51,7 @@ function login()
     jsonToBeSend["pass"] = password.value;
 	//setUrlPathLocalStorage(urlPath);
 	urlPath=window.localStorage.getItem("urlPath");
+	alert('url path : ' + urlPath);
 	j('#loading').show();
     j.ajax({
          url: urlPath+"LoginWebService",
@@ -60,9 +61,11 @@ function login()
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
          	if (data.Status == 'Success'){
-                
+                alert('data : ' + JSON.stringify(data));
+                console.log('data : ' + JSON.stringify(data));
                 if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
                    data.multiLangInMobile){
+                   	alert('multiLangInMobile');
                        	var headerBackBtn=defaultPagePath+'withoutBckBtn.html';
 	                    var pageRef=defaultPagePath+'language.html';
                     j('#mainHeader').load(headerBackBtn);
@@ -72,6 +75,7 @@ function login()
 			        setUserSessionDetails(data,jsonToBeSend);
                     j('#loading').hide();         
         }else{
+        	alert('not multiLangInMobile');
             var headerBackBtn=defaultPagePath+'categoryMsgPage.html';
 	        var pageRef=defaultPagePath+'category.html';
         	 j('#mainHeader').load(headerBackBtn);
@@ -127,13 +131,14 @@ function login()
 }
  
 function commanLogin(){
+	alert('first');
  	var userName = document.getElementById("userName");
  	var userNameValue = userName.value; 
  	var domainName = userNameValue.split('@')[1];
 	 var jsonToDomainNameSend = new Object();
 	jsonToDomainNameSend["userName"] = domainName;
-	jsonToDomainNameSend["mobilePlatform"] = device.platform;
-	//jsonToDomainNameSend["mobilePlatform"] = "Android";
+	//jsonToDomainNameSend["mobilePlatform"] = device.platform;
+	jsonToDomainNameSend["mobilePlatform"] = "Android";
 	jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP";
   	//var res=JSON.stringify(jsonToDomainNameSend);
 	var requestPath = WebServicePath;
